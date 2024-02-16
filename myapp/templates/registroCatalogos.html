@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Registro de Proveedor{% endblock %}
+
+{% block body %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/catalogos.css' %}">
+</head>
+
+<ul class="nav nav-tabs" id="myTabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link {% if active_tab == 'marcas' %}active{% endif %}" id="marcas-tab" data-toggle="tab" href="#marcas" role="tab" aria-controls="marcas" aria-selected="false">Marcas</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if active_tab == 'presentaciones' %}active{% endif %}" id="presentaciones-tab" data-toggle="tab" href="#presentaciones" role="tab" aria-controls="presentaciones" aria-selected="true">Presentaciones</a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabsContent">
+    <div class="tab-pane fade {% if active_tab == 'marcas' %}show active{% endif %}" id="marcas" role="tabpanel" aria-labelledby="marcas-tab">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-8 py-4 col-xl-8">
+                <h1>Listado de Marcas</h1>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRegistroMarcas">
+                    +Nuevo
+                </button>
+                <div class="table-responsive py-2">
+                    <br>
+                    <table class="table table-bordered" style="border-color: #6da1cfef;">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nombre de Marcas</th>
+                                <th colspan="2" class="text-center">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in marcas %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ i.id }}</td>
+                                <td>{{ i.nombre }}</td>
+                                <td class="text-center">
+                                    <button onclick="abrir_modal_edicionMarcas('{% url 'editar_marcas_modal' i.id %}')"
+                                            class="btn btn-outline-primary">Editar</button>
+                                </td>
+                                <td class="text-center">
+                                    <a href="#" class="btn btn-outline-danger btnEliminacion" onclick="mostrar_modal_eliminarM({{ i.id }})">Eliminar</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade {% if active_tab == 'presentaciones' %}show active{% endif %}" id="presentaciones" role="tabpanel" aria-labelledby="presentaciones-tab">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-8 py-4 col-xl-8">
+                <h1>Listado de Presentaciones</h1>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRegistroPresentacion">
+                    +Nuevo
+                </button>
+                <div class="table-responsive py-2">
+                    <br>
+                    <table class="table table-bordered" style="border-color: #6da1cfef;">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nombre de Presentaciones</th>
+                                <th colspan="2" class="text-center">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in presentaciones %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ i.id }}</td>
+                                <td>{{ i.nombre }}</td>
+                                <td class="text-center">
+                                    <button onclick="abrir_modal_edicionPresentaciones('{% url 'editar_presentaciones_modal' i.id %}')"
+                                            class="btn btn-outline-primary">Editar</button>
+                                </td>
+                                <td class="text-center">
+                                    <a href="#" class="btn btn-outline-danger btnEliminacion" onclick="mostrar_modal_eliminarP({{ i.id }})">Eliminar</a>
+                                </td>
+
+        
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalRegistroPresentacion" tabindex="-1" role="dialog" aria-labelledby="modalRegistroPresentacionLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalRegistroPresentacionLabel">Registrar Presentacion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'registrar_catalogos' %}?tab=presentaciones">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="nombre_presentaciones">Nombre:</label>
+                        {{ form_presentaciones.nombre }}
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-success btn-block text-white" name="guardarFormPresentaciones" value="true" >Guardar Presentación</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalRegistroMarcas" tabindex="-1" role="dialog" aria-labelledby="modalRegistroMarcasLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalRegistroMarcasLabel">Registrar Marcas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'registrar_catalogos' %}?tab=marcas">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="nombre_marcas">Nombre:</label>
+                        {{ form_marcas.nombre }}
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-success btn-block text-white" name="guardarFormMarcas" value="true">Guardar Marcas</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalEliminarProducto" tabindex="-1" role="dialog" aria-labelledby="modalEliminarProductoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEliminarProductoLabel">Confirmar Eliminación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea eliminar este producto?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a id="eliminarProductoBtn" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<body>
+    <div class="container">
+        <div class="btn-group" role="group" aria-label="Opciones">
+            <a href="http://127.0.0.1:8000/" class="btn btn-primary">Ir al Inicio</a>
+        </div>
+    </div>
+</body>
+
+<div class="modal fade" id="edicionPresentaciones" role="dialog"> 
+
+</div>
+<script type="text/javascript">
+  var $j = jQuery.noConflict();
+  function abrir_modal_edicionPresentaciones(url) {
+    $j('#edicionPresentaciones').load(url, function() {
+      $j(this).modal('show');
+    });
+  }
+</script>
+<div class="modal fade" id="edicionMarcas" role="dialog"> 
+
+</div>
+<script type="text/javascript">
+  var $j = jQuery.noConflict();
+  function abrir_modal_edicionMarcas(url) {
+    $j('#edicionMarcas').load(url, function() {
+      $j(this).modal('show');
+    });
+  }
+</script>
+<script type="text/javascript">
+    var $j = jQuery.noConflict();
+    
+    function mostrar_modal_eliminarP(productoId) {
+        $j("#eliminarProductoBtn").attr("href", "/eliminarPresentaciones/" + productoId);
+        $j("#modalEliminarProducto").modal("show");
+    }
+</script>
+<script type="text/javascript">
+    var $j = jQuery.noConflict();
+    
+    function mostrar_modal_eliminarM(productoId) {
+        $j("#eliminarProductoBtn").attr("href", "/eliminarMarcas/" + productoId);
+        $j("#modalEliminarProducto").modal("show");
+    }
+</script>
+{% endblock %}

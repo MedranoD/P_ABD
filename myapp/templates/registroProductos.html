@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Registro de Producto{% endblock %}
+
+{% block body %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/productos.css' %}">
+</head>
+
+<div class="row">
+
+    <div class="col-sm-12 col-md-6 col-lg-8 py-4 col-xl-8">
+      <h1>Listado de Producto</h1>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRegistroProductos">
+            +Nuevo
+        </button>
+        <div class="table-responsive py-2">
+            <br>
+            <table class="table table-bordered" style="border-color: #6da1cfef;"> 
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Presentación</th>
+                        <th scope="col">Precio</th>
+                        <th colspan="2" class="text-center">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ producto.id }}</td>
+                        <td>{{ producto.marca }}</td>
+                        <td>{{ producto.presentacion }}</td>
+                        <td>{{ producto.precio }}</td>
+                        <td class="text-center">
+                          <button onclick="abrir_modal_edicion('{% url 'editar_producto_modal' producto.id %}')"
+                                            class="btn btn-outline-primary "> Editar </button>
+                      </td>
+                      <td class="text-center">
+                        <a href="#" class="btn btn-outline-danger btnEliminacion" onclick="mostrar_modal_eliminar({{ producto.id }})">Eliminar</a>
+                    </td>
+                  </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalRegistroProductos" tabindex="-1" role="dialog" aria-labelledby="modalRegistroProductosLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalRegistroProductosLabel">Registrar Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'registrar_productos' %}">
+                    {% csrf_token %}
+                    {{ form_productos.as_p }}
+                    <br>
+                    <button type="submit" class="btn btn-success btn-block text-white" name="guardarFormProductos" value="true">Guardar Producto</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEliminarProducto" tabindex="-1" role="dialog" aria-labelledby="modalEliminarProductoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEliminarProductoLabel">Confirmar Eliminación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea eliminar este producto?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a id="eliminarProductoBtn" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<body>
+    <div class="container">
+        <div class="btn-group" role="group" aria-label="Opciones">
+            <a href="http://127.0.0.1:8000/" class="btn btn-primary">Ir al Inicio</a>
+        </div>
+    </div>
+</body>
+<div class="modal fade" id="edicion" role="dialog"> 
+
+</div>
+<script type="text/javascript">
+  var $j = jQuery.noConflict();
+  function abrir_modal_edicion(url) {
+    $j('#edicion').load(url, function() {
+      $j(this).modal('show');
+    });
+  }
+</script>
+<script type="text/javascript">
+    var $j = jQuery.noConflict();
+    
+    function mostrar_modal_eliminar(productoId) {
+        $j("#eliminarProductoBtn").attr("href", "/eliminarProducto/" + productoId);
+        $j("#modalEliminarProducto").modal("show");
+    }
+</script>
+
+{% endblock %}

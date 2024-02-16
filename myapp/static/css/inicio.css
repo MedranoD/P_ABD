@@ -1,0 +1,21 @@
+.btn-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; 
+}
+
+.btn-group a {
+    margin: 0 10px;
+}
+.btn {
+    max-width: 200px; 
+}
+
+h1.text-center {
+    margin-top: 50px; 
+}
+
+body {
+    background-color: #e9f0f5; 
+}

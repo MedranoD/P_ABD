@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block body %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Bienvenido a la Página de Inicio</h1>
+        <div class="btn-group" role="group" aria-label="Opciones">
+            <a href="/registroCatalogos/" class="btn btn-primary">Catálogos</a>
+            <a href="/registroProductos/" class="btn btn-success">Productos</a>
+        </div>
+    </div>
+</body>
+{% endblock %}

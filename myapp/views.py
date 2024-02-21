@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
+def index(request):
+    return render(request, "index.html")
 def inicio(request):
 
     return render(request, "inicio.html")

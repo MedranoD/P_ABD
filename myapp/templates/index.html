@@ -1,0 +1,49 @@
+{% load static %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <header class="container">
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+        <h1 id="titulo">Blog Daniel Medrano</h1>
+    </header>
+    <div class="ctitulo">
+        <p>En este blog, hablaremos de los fundamentos del desarrollo web, explorando herramientas y tecnologías clave </p>
+    </div>
+    <section class="container1">
+        <article class="post">
+            <h2>HTML</h2>
+            <img src="/static/img/html.svg" width="400">
+            <p>Es el componente más básico de la Web. Define el significado y la estructura del contenido web</p>
+        </article>
+        <article class="post">
+            <h2>GITHUB </h2>
+            <img src="/static/img/lg.svg" width="400">
+            <p>Es una plataforma de desarrollo colaborativo para alojar proyectos utilizando el sistema de control de versiones Git. Permite a los desarrolladores colaborar en proyectos, rastrear cambios, y mantener versiones de sus proyectos de manera eficiente. </p>
+        </article>
+        <article class="post">
+            <h2>DJANGO </h2>
+            <img src="/static/img/dj.png" width="400">
+            <p>Es un framework de desarrollo web de alto nivel en Python que promueve el desarrollo rápido y el diseño pragmático. Facilita la creación de aplicaciones web complejas con menos código y tiempo.</p>
+        </article>
+    </section>
+    <footer>
+        <div>
+            <a href="http://127.0.0.1:8000"> Ir al Inicio</a>
+            <a href="#titulo"> Ir a Arriba</a>
+            <a href="mailto:nicolas@gmail.com">daniemedrano011@gmail.com</a>
+        </div>
+        <p>&copy; Derechos Reservados</p>
+    </footer>
+</body>
+
+</html>
+{% endblock %}

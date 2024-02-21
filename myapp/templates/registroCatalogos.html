@@ -141,7 +141,7 @@
                 <form method="post" action="{% url 'registrar_catalogos' %}?tab=marcas">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="nombre_marcas">Nombre:</label>
+                        <label for="nombre">Nombre:</label>
                         {{ form_marcas.nombre }}
                     </div>
                     <br>

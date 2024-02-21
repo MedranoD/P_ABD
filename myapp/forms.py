@@ -9,7 +9,7 @@ class MarcaForm(forms.ModelForm):
         model = Marca
         fields = ['nombre']
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'id': 'nombre'}),
         }
 class PresentacionForm(forms.ModelForm):
     class Meta:
